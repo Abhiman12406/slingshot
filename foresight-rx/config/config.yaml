@@ -1,0 +1,26 @@
+# Foresight-RX Application Configuration
+
+monitoring:
+  poll_interval_sec: 1.0 # Polling interval for mock telemetry
+  rolling_window_sec: 30 # Aggregation window
+  use_mock: true         # Determines if we use real or generated telemetry
+
+features:
+  vector_size: 6 # [writes_per_sec, renames_per_sec, entropy_delta, unique_exts, burst_score, cpu_spike]
+
+model:
+  type: "autoencoder"
+  input_dim: 6
+  hidden_dim: 16
+  latency_threshold_ms: 200
+  force_cpu: true # Fallback as requested
+  checkpoint_path: "models/checkpoints/autoencoder_latest.pth"
+
+detection:
+  score_threshold_low: 0.3
+  score_threshold_critical: 0.75
+  sliding_window_size: 5
+
+simulator:
+  dummy_dir: "data/samples/dummy_files"
+  num_files: 50
